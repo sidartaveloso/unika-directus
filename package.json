@@ -1,0 +1,33 @@
+{
+  "name": "unika-directus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/index.js",
+    "start:dev": "nodemon -w extensions extensions/index.js",
+    "start": "directus start",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "compose:up": "docker-compose up --build",
+    "compose:down": "docker-compose down",
+    "compose:psql": "docker-compose exec --user postgres unika_directus_postgres psql",
+    "compose:bash": "docker-compose exec --user postgres unika_directus_postgres bash",
+    "bootstrap": "directus bootstrap",
+    "migration:create": "yarn knex migrate:make",
+    "migration:up": "yarn directus database migrate:up",
+    "migration:down": "yarn directus database migrate:down",
+    "migration:latest": "yarn directus database migrate:latest",
+    "predocker:build": "node utils/gen-docker-build-files.js",
+    "docker:build": "docker build --rm -f Dockerfile -t docker-registry.de.vix.br/unika/$npm_package_name:$npm_package_version . && echo Done: docker-registry.de.vix.br/unika/$npm_package_name:$npm_package_version",
+    "docker:push": "docker push docker-registry.de.vix.br/unika/$npm_package_name:$npm_package_version",
+    "docker:release": "yarn docker:build && yarn docker:push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "directus": "^9.10.0",
+    "pg": "^8.7.3"
+  }
+}
