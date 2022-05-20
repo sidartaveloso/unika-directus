@@ -1,0 +1,40 @@
+version: "2.4"
+services:
+  unika_directus_postgres:
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: unika_directus
+    networks:
+      unika_directus:
+        ipv4_address: 172.21.12.2
+    command: ["postgres", "-c", "log_statement=all"]
+
+  unika_pgadmin4:
+    image: dpage/pgadmin4:6.9
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_DEFAULT_EMAIL=dev@devix.co
+      - PGADMIN_LISTEN_ADDRESS=0.0.0.0
+    volumes:
+      - pgadmin4_data:/var/lib/pgadmin
+    restart: unless-stopped
+    hostname: unika_pgadmin4
+    depends_on:
+      - unika_directus_postgres
+    networks:
+      unika_directus:
+        ipv4_address: 172.21.12.6
+
+volumes:
+  db_data:
+  pgadmin4_data:
+
+networks:
+  unika_directus:
+    ipam:
+      config:
+        - subnet: 172.21.12.0/24
