@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   unika_directus_postgres:
-    image: postgis/postgis:13-3.1-alpine
+    image: postgis/postgis:13-3.4-alpine
     restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -14,7 +14,7 @@ services:
     command: ["postgres", "-c", "log_statement=all"]
 
   unika_pgadmin4:
-    image: dpage/pgadmin4:6.9
+    image: dpage/pgadmin4:8.1
     environment:
       - PGADMIN_DEFAULT_PASSWORD=password
       - PGADMIN_DEFAULT_EMAIL=dev@devix.co
