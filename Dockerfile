@@ -1,4 +1,4 @@
-FROM directus/directus:9.11.0
+FROM directus/directus:10.8.3
 WORKDIR /directus
 COPY docker-files/package.json docker-files/yarn.lock ./
 COPY ./extensions ./extensions
